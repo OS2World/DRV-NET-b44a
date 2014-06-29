@@ -1,0 +1,106 @@
+================================================
+Broadcom BCM4401 OS/2 NDIS 2.0.1 MAC driver 1.05
+================================================
+
+1.Introduction
+
+Broadcom BCM4401 is a fast ethernet MAC chip.
+
+The official driver is not available for OS/2, 
+and the datasheet is not available to write drivers.
+
+This driver is based on the source of Linux driver version 3.0.7, 
+which was provided on the Broadcom website. 
+
+
+Included files are:
+b44a.os2	NDIS 2.0.1 MAC driver
+b44a.nif	Network Information File
+b44a.sym	Symbol Map file
+b44a.lnk	Document (this file)
+source.zip	source files
+LICENSE		GNU GENERAL PUBLIC LICENSE
+
+You could download the latest file on the gomi:NDIS MAC Drivers page,
+URL http://www.os2warp.be/index2.php?name=gomindis .
+
+
+2.No Warranty
+
+This code is provided 'AS IS' and any warranties are disclaimed.
+
+
+3.Functional restrictions
+
+- Wake-on-LAN is not supported.
+
+
+4.Considerable configuration keywords
+
+[TXEARLY]
+The value of this keyword is written directly into txwatermark register.
+You should NOT specify larger than the default value, 56(0x38).
+
+[TXMXDMA]
+The value of this keyword is written directly into emactxmaxburstlen register.
+This register should be 2^n, and be equal to or smaller than 64(0x40),
+though the register can be modified in range of [0..511].
+The driver allows one among 8, 16, 32, 64.
+
+
+5.Note
+
+- No test on SMP environment. (I gess it can work.)
+- If the error recovery reset occurs, rx frames queued by protocol 
+   may corrupt... though I don't know such excellent protocol that 
+   can do rx frames asynchronous copy.
+- Hang-up ver.1.02 with the chip rev.2 may result from the same 
+  reason at the different point that is fixed at linux v3.0.10.
+
+
+6.Redistribution with modification
+
+This is GNU GENERAL PUBLIC LICENSE polluted software.
+You should not diffuse pollution... 
+
+
+7.Acknowledgement
+
+Yuri Dario tried many test codes to detect and to resolve 
+the problem that ver.1.02 driver freezes with the chip rev.02.
+
+
+8.History
+
+ver.1.05 - 12/17, 2005.
+- 1 new keyword, IRQ15OVR, was added.
+
+ver.1.04 - 11/13, 2005.
+- Workaround for swith.os2 of Virtual PC.(GS selector corruption)
+- (re)set filter mode during the hardware reset.
+
+ver.1.03 - 11/01, 2005.
+- Bugfix: Statistics counter range was corrected.
+- Bugfix: Enet mac registers accesses are inhibited 
+  until Sonics configuration registers are initialized.
+
+ver.1.02 - 01/06, 2005.
+- Bugfix: Device scan code was corrected.(Scan EXCEPT bcm4401:-))
+- Resident size is slightly reduced.
+
+ver.1.01 - 12/06, 2004.
+- Cleaning of statistics counters during the H/W reset.
+- Internal counters for debug are removed.
+- 2 new keywords, TXMXDMA and RXMXDMA, are available.
+
+ver.1.00 - 12/03, 2004.
+- Initial release.
+
+
+9.Contact to the author
+
+Access os2warp.be Technical Support Center,
+URL http://www.os2warp.be/support/
+ or
+Email to YANAGIHARA Nobuyuki,
+ <VYL00513@nifty.ne.jp>
